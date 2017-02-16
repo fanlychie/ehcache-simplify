@@ -144,6 +144,73 @@ public final class EhcacheManager {
     }
 
     /**
+     * 缓存中是否含有指定的键名称
+     *
+     * @param cacheName 缓存名称
+     * @param key       键名称
+     * @return 有则返回 true, 否则返回 false
+     */
+    public static boolean containKey(String cacheName, Serializable key) {
+        return containKey(getCache(cacheName), key);
+    }
+
+    /**
+     * 缓存中是否含有指定的键名称
+     *
+     * @param cache 缓存对象
+     * @param key   键名称
+     * @return 有则返回 true, 否则返回 false
+     */
+    public static boolean containKey(Cache cache, Serializable key) {
+        return cache.isKeyInCache(key);
+    }
+
+    /**
+     * 缓存中是否含有指定的值
+     *
+     * @param cacheName 缓存名称
+     * @param value     值
+     * @return 有则返回 true, 否则返回 false
+     */
+    public static boolean containValue(String cacheName, Serializable value) {
+        return containValue(getCache(cacheName), value);
+    }
+
+    /**
+     * 缓存中是否含有指定的值
+     *
+     * @param cache 缓存对象
+     * @param value 值
+     * @return 有则返回 true, 否则返回 false
+     */
+    public static boolean containValue(Cache cache, Serializable value) {
+        return cache.isValueInCache(value);
+    }
+
+    /**
+     * 判断缓存是否过期
+     *
+     * @param cacheName 缓存名称
+     * @param key       键名称
+     * @return 过期则返回 true, 否则返回 false
+     */
+    public static boolean isExpired(String cacheName, Serializable key) {
+        return isExpired(getCache(cacheName), key);
+    }
+
+    /**
+     * 判断缓存是否过期
+     *
+     * @param cache 缓存对象
+     * @param key   键名称
+     * @return 过期则返回 true, 否则返回 false
+     */
+    public static boolean isExpired(Cache cache, Serializable key) {
+        Element element = cache.get(key);
+        return element == null ? true : cache.isExpired(element);
+    }
+
+    /**
      * 从缓存中移除键值对
      *
      * @param cacheName 缓存名称
